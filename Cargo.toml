@@ -1,0 +1,35 @@
+[package]
+name = "rsomics-normaltest"
+version = "0.1.0"
+description = "D'Agostino-Pearson normality battery (normaltest / skewtest / kurtosistest) — value-exact scipy.stats port"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-normaltest"
+authors = ["Zane Leong <efd@live.com>"]
+categories = ["science", "command-line-utilities"]
+keywords = ["statistics", "normaltest", "skewtest", "kurtosis", "scipy"]
+readme = "README.md"
+exclude = ["perf"]
+
+[[bin]]
+name = "rsomics-normaltest"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_normaltest"
+path = "src/lib.rs"
+doctest = false
+
+[dependencies]
+rsomics-common = { version = "0.6", features = ["rayon"] }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+libm = "0.2"
+
+[dev-dependencies]
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+
+[[bench]]
+name = "normaltest"
+harness = false
