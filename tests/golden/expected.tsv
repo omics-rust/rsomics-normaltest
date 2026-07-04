@@ -33,3 +33,17 @@ large	skewtest	less	-1.1914280294022053	0.1167427973838307
 large	kurtosistest	less	-2.4001062404398503	0.008195157023147367
 large	skewtest	greater	-1.1914280294022053	0.8832572026161694
 large	kurtosistest	greater	-2.4001062404398503	0.9918048429768527
+constant	normaltest	two-sided	nan	nan
+constant	skewtest	two-sided	nan	nan
+constant	kurtosistest	two-sided	nan	nan
+constant	skewtest	less	nan	nan
+constant	kurtosistest	less	nan	nan
+constant	skewtest	greater	nan	nan
+constant	kurtosistest	greater	nan	nan
+infval	normaltest	two-sided	nan	nan
+infval	skewtest	two-sided	nan	nan
+infval	kurtosistest	two-sided	nan	nan
+infval	skewtest	less	nan	nan
+infval	kurtosistest	less	nan	nan
+infval	skewtest	greater	nan	nan
+infval	kurtosistest	greater	nan	nan

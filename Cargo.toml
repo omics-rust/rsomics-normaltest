@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-normaltest"
-version = "0.1.0"
+version = "0.1.1"
 description = "D'Agostino-Pearson normality battery (normaltest / skewtest / kurtosistest) — value-exact scipy.stats port"
 edition = "2024"
 rust-version = "1.91"

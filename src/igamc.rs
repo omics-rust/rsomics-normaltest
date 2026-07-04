@@ -10,8 +10,16 @@ const BIG: f64 = 4.503_599_627_370_496e15;
 const BIGINV: f64 = 2.220_446_049_250_313e-16;
 
 /// Chi-squared survival function P(X > x) with `df` degrees of freedom.
+///
+/// A NaN statistic (a zero-variance / non-finite sample makes `K²` come out NaN)
+/// short-circuits to NaN, matching SciPy's `chdtrc(df, nan) = nan`. Without this
+/// the `igamc` continued fraction never satisfies `t <= MACHEP` for a NaN
+/// argument and spins forever.
 #[must_use]
 pub fn chi2_sf(df: f64, x: f64) -> f64 {
+    if x.is_nan() {
+        return f64::NAN;
+    }
     if x <= 0.0 {
         return 1.0;
     }

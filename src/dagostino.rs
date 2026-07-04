@@ -251,4 +251,19 @@ mod tests {
         let x = [1.0, 2.0, f64::NAN, 4.0, 5.0, 6.0, 7.0, 8.0];
         assert!(normaltest(&x).is_err());
     }
+
+    // Zero-variance and non-finite samples make K² come out NaN; SciPy returns
+    // nan/nan and so must we — the igamc tail must not loop on a NaN statistic.
+    #[test]
+    fn constant_sample_is_nan_not_hang() {
+        let r = normaltest(&[5.0; 8]).unwrap();
+        assert!(r.statistic.is_nan() && r.p.is_nan());
+    }
+
+    #[test]
+    fn inf_observation_is_nan_not_hang() {
+        let x = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, f64::INFINITY];
+        let r = normaltest(&x).unwrap();
+        assert!(r.statistic.is_nan() && r.p.is_nan());
+    }
 }

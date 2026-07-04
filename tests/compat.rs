@@ -4,6 +4,10 @@
 //! computed by SciPy 1.17.1; each `name.tsv` is the corresponding
 //! one-value-per-line sample. The statistic must match to 1e-13 relative and the
 //! p-value to 1e-12 through the Cephes ndtr / igamc paths. SciPy is not invoked.
+//!
+//! `constant` (zero variance) and `infval` (a non-finite observation) are
+//! degenerate samples where SciPy returns `nan`/`nan`; the expected `nan` cells
+//! assert we produce NaN too instead of looping in the igamc tail.
 
 use std::fs;
 use std::path::PathBuf;
@@ -17,6 +21,10 @@ fn golden(name: &str) -> PathBuf {
 }
 
 fn rel_close(got: f64, want: f64, rel: f64, ctx: &str) {
+    if want.is_nan() {
+        assert!(got.is_nan(), "{ctx}: got {got:e} want nan");
+        return;
+    }
     if want == 0.0 {
         assert!(got.abs() <= rel, "{ctx}: got {got:e} want 0, abs > {rel:e}");
         return;
@@ -74,5 +82,5 @@ fn matches_scipy_golden() {
         rel_close(r.p, p, 1e-12, &ctx);
         seen += 1;
     }
-    assert_eq!(seen, 35, "expected 35 golden cases");
+    assert_eq!(seen, 49, "expected 49 golden cases");
 }
